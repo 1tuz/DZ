@@ -1,0 +1,30 @@
+user:
+  isAdmin: true
+  name: "Anton"
+  age: 30
+  position: "DevOps Engineer"
+  skills:
+    - name: "Docker"
+      level: 5
+      description: |
+        Experience with Dockerfiles,
+        docker-compose, and container
+        orchestration.
+    - name: "Kubernetes"
+      level: 4
+      description: |
+        Working with deployments,
+        services, and ingress.
+  address:
+    country: "Russia"
+    city: "Moscow"
+    street: "Tverskaya"
+    houseNumber: 1
+    apartmentNumber: 10
+  pets:
+    - name: "Barsik"
+      breed: "Siamese"
+      canMeow: true
+    - name: "Zhuchka"
+      breed: "Mongrel"
+      canMeow: false
