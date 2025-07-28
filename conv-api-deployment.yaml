@@ -14,16 +14,16 @@ spec:
     spec:
       containers:
         - name: conv-api
-          image: your-image-for-conv-api # Please replace with your actual image
+          image: antonlarichev/conv-api:1.0
           ports:
             - containerPort: 8080
           env:
             - name: AMQP_EXCHANGE
-              value: "your-exchange"
+              value: "converter-exchange"
             - name: AMQP_USER
-              value: "user"
+              value: "myuser"
             - name: AMQP_PASSWORD
-              value: "password"
+              value: "mypassword"
             - name: AMQP_HOSTNAME
               value: "rabbitmq-service"
             - name: SEEDUSERNAME
