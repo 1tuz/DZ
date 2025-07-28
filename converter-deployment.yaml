@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: converter-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      component: converter
+  template:
+    metadata:
+      labels:
+        component: converter
+    spec:
+      containers:
+        - name: converter
+          image: antonlarichev/conv-service:1.0
+          env:
+            - name: AMQP_EXCHANGE
+              value: "converter-exchange"
+            - name: AMQP_USER
+              value: "myuser"
+            - name: AMQP_PASSWORD
+              value: "mypassword"
+            - name: AMQP_HOSTNAME
+              value: "rabbitmq-service"
+            - name: AMQP_QUEUE
+              value: "converter-queue"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: converter-service
+spec:
+  type: ClusterIP
+  selector:
+    component: converter
+  ports:
+    - port: 8080
+      targetPort: 8080

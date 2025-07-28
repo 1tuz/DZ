@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conv-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: conv-api
+  template:
+    metadata:
+      labels:
+        component: conv-api
+    spec:
+      containers:
+        - name: conv-api
+          image: antonlarichev/conv-api:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AMQP_EXCHANGE
+              value: "converter-exchange"
+            - name: AMQP_USER
+              value: "myuser"
+            - name: AMQP_PASSWORD
+              value: "mypassword"
+            - name: AMQP_HOSTNAME
+              value: "rabbitmq-service"
+            - name: SEEDUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: conv-api-secrets
+                  key: SEEDUSERNAME
+            - name: SEEDUSER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: conv-api-secrets
+                  key: SEEDUSER_PASSWORD
+          volumeMounts:
+            - name: uploads
+              mountPath: /opt/app/uploads
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: conv-api-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conv-api-service
+spec:
+  type: ClusterIP
+  selector:
+    component: conv-api
+  ports:
+    - port: 8080
+      targetPort: 8080

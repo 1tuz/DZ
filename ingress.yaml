@@ -17,3 +17,17 @@ spec:
             name: short-app-clusterip
             port: 
               number: 80
+      - pathType: Prefix
+        path: "/api"
+        backend:
+          service:
+            name: short-api-clusterip
+            port:
+              number: 3000
+      - pathType: Prefix
+        path: "/conv-api"
+        backend:
+          service:
+            name: conv-api-service
+            port:
+              number: 8080
