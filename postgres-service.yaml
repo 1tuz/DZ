@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: short-app-clusterip
+  name: postgres-clusterip
 spec:
   type: ClusterIP
   ports:
-    - port: 80
-      targetPort: 8080
+    - port: 5432
       protocol: TCP
   selector:
-    app: short-app
+    components: postgres
